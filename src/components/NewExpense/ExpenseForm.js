@@ -6,6 +6,7 @@ const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredAmount, setEnteredAmount] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
+  const [formDisplay, setFormDisplay] = useState('minimizedDisplay');
   // When state depends on previous state use fn below
   // const [userInput, setUserInput] = useState({
   //   enteredTitle: '',
@@ -41,43 +42,59 @@ const ExpenseForm = (props) => {
     setEnteredTitle('');
     setEnteredDate('');
     setEnteredAmount('');
+    setFormDisplay('minimizedDisplay');
   };
 
-  return <form onSubmit={submitHandler}>
-    <div className="new-expense__controls">
-      <div className="new-expense__control">
-        <label>Title</label>
-        <input
-          type='text'
-          value={enteredTitle}
-          onChange={titleChangeHandler}
-        />
+  // if setFormDisplay is not null show form
+  // if (setFormDisplay === 'clicked')
+  const expandedDisplay = (<form onSubmit={submitHandler}>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Title</label>
+          <input
+            type='text'
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
+        </div>
+        <div className="new-expense__control">
+          <label>Amount</label>
+          <input
+            type='number'
+            min="0.01"
+            step="0.01"
+            value={enteredAmount}
+            onChange={amountChangeHandler}
+          />
+        </div>
+        <div>
+          <label>Date</label>
+          <input
+            type="date"
+            min="2019-01-01"
+            max="2022-12-31"
+            value={enteredDate}
+            onChange={dateChangeHandler}
+          />
+        </div>
       </div>
-      <div className="new-expense__control">
-        <label>Amount</label>
-        <input
-          type='number'
-          min="0.01"
-          step="0.01"
-          value={enteredAmount}
-          onChange={amountChangeHandler}
-        />
+      <div className="new-expense__actions">
+        <button type="submit">Add Expense</button>
+        <button onClick={() => setFormDisplay('minimizedDisplay')} type="submit">Cancel</button>
       </div>
-      <div>
-        <label>Date</label>
-        <input
-          type="date"
-          min="2019-01-01"
-          max="2022-12-31"
-          value={enteredDate}
-          onChange={dateChangeHandler}
-        />
+    </form>
+  )
+  const minimizedDisplay = (<form>
+     <div className="new-expense__mini">
+        <button onClick={() => setFormDisplay('expandedDisplay')} type="submit">Add New Expense</button>
       </div>
-    </div>
-    <div className="new-expense__actions">
-      <button type="submit">Add Expense</button>
-    </div>
-  </form>
+    </form>
+  )
+
+  if(formDisplay === 'expandedDisplay') {
+    return (expandedDisplay)
+  }
+  return (minimizedDisplay)
 }
 
 export default ExpenseForm;
