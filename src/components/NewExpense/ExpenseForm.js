@@ -34,7 +34,7 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate)
     };
 
@@ -45,8 +45,6 @@ const ExpenseForm = (props) => {
     setFormDisplay('minimizedDisplay');
   };
 
-  // if setFormDisplay is not null show form
-  // if (setFormDisplay === 'clicked')
   const expandedDisplay = (<form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
