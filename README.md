@@ -1,4 +1,5 @@
 # starting-react
+An intro to front end development with react
 
 * This is an application for tracking expenses. This project was to give me a solid understanding of react basics by working with components, state, events as well as rendering lists and conditional content.
 
